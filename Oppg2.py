@@ -3,7 +3,7 @@
 
 from threading import Thread
 
-times = 1000000;
+times = 500;
 i = 0
 
 def Inkrementer(lock):
