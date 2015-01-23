@@ -1,30 +1,33 @@
 #Ny pythonfil
+#python Oppg2.py
+
 from threading import Thread
 
 times = 1000000;
 i = 0
 
-def Inkrementer():
+def Inkrementer(lock):
   global i
   for _ in range(times):
+    lock.acquire()
     i += 1
+    lock.release()
   
-def Dekrementer():
+def Dekrementer(lock):
   global i
   for _ in range(times):
+    lock.acquire()
     i -= 1
-
-
-
+    lock.release()
+  
 def main():
-  someThread = Thread(target = Inkrementer, args = (),)
-  someThread2 = Thread(target = Dekrementer, args = (),)
+  lock=Lock()
+  someThread = Thread(target = Inkrementer, args = (lock),)
+  someThread2 = Thread(target = Dekrementer, args = (lock),)
   someThread.start()
   someThread2.start()
   someThread.join()
   someThread2.join()
   print(i)
-
-
 
 main()
